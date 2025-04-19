@@ -2,7 +2,7 @@ package org.lib
 
 class ArtifactPipelineDelegate {
     Map buildConfig = [:]
-    Map unitTestConfig = [:]
+    Map unitTestConfig = [enabled: true]
 
     void build(Closure c) {
         c.resolveStrategy = Closure.DELEGATE_FIRST

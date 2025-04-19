@@ -11,6 +11,7 @@ def call(Closure body) {
 
     pipeline {
         agent any
+
         stages {
             stage('Build') {
                 steps {
@@ -20,7 +21,7 @@ def call(Closure body) {
             }
             stage('Unit Test') {
                 when {
-                    expression { unitTestsConfig.enabled != false }
+                    expression { "${unitTestConfig.enabled}" == "true" }
                 }
                 steps {
                     echo "Running unit tests..."
