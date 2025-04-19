@@ -1,20 +1,10 @@
-def call() {
-    pipeline {
-        agent any
+import org.lib.ArtifactPipelineDelegate
 
-        stages {
-            stage('Build') {
-                steps {
-                    sh "./gradlew build"
-                }
-            }
+static def call(Closure body) {
+    def pipeline = new ArtifactPipelineDelegate()
+    body.resolveStrategy = Closure.DELEGATE_FIRST
+    body.delegate = pipeline
+    body()
 
-            stage('Unit Tests') {
-                steps {
-                    sh './gradlew test'
-                    junit '**/build/test-results/test/*.xml'
-                }
-            }
-        }
-    }
+    pipeline.run()
 }
