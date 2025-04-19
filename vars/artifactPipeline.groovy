@@ -28,12 +28,6 @@ def call(Closure body) {
                     echo "Running unit tests..."
                     sh "./gradlew test"
                 }
-
-                post {
-                    success {
-                        archiveArtifacts artifacts: 'build/libs/*.jar', fingerprint: true
-                    }
-                }
             }
         }
     }
