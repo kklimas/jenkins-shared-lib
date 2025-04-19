@@ -11,7 +11,6 @@ def call() {
 
             stage('Build') {
                 steps {
-                    echo "Building ${appName}"
                     sh "./gradlew build"
                 }
             }
