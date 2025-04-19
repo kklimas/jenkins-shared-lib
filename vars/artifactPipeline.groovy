@@ -9,6 +9,7 @@ def call(Closure body) {
 }
 
 def runPipeline(Map config) {
+    def appName = config.appName ?: 'unknown'
     def branch = config.branch ?: params.BRANCH ?: 'master'
 
     pipeline {
@@ -27,7 +28,7 @@ def runPipeline(Map config) {
 
             stage('Build') {
                 steps {
-                    echo "Building ${config.appName}"
+                    echo "Building ${appName}"
                     sh "./gradlew build"
                 }
             }
