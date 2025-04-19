@@ -1,4 +1,4 @@
-def call(Closure closure) {
+def call(Closure body) {
     def config = [:]
 
     body.resolveStrategy = Closure.DELEGATE_FIRST
