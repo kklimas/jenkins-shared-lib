@@ -16,16 +16,23 @@ def call(Closure body) {
             stage('Build') {
                 steps {
                     echo "Building ${buildConfig.artifactId}:${buildConfig.version}"
-                    sh "./gradlew clean build"
+                    sh "./gradlew clean build bootJar"
                 }
             }
             stage('Unit Test') {
                 when {
                     expression { "${unitTestConfig.enabled}" == "true" }
                 }
+
                 steps {
                     echo "Running unit tests..."
                     sh "./gradlew test"
+                }
+
+                post {
+                    success {
+                        archiveArtifacts artifacts: 'build/libs/*.jar', fingerprint: true
+                    }
                 }
             }
         }

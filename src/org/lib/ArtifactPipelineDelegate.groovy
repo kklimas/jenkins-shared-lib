@@ -4,7 +4,7 @@ class ArtifactPipelineDelegate {
     Map buildConfig = [:]
     Map unitTestConfig = [enabled: true]
 
-    void build(Closure c) {
+    void buildArtifacts(Closure c) {
         c.resolveStrategy = Closure.DELEGATE_FIRST
         c.delegate = buildConfig
         c()
