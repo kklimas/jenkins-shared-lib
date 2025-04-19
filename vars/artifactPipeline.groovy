@@ -1,16 +1,9 @@
-def call(Closure body) {
-    def config = [:]
-
-    body.resolveStrategy = Closure.DELEGATE_FIRST
-    body.delegate = config
-    body()
-
-    runPipeline(config)
+def call(appName: String) {
+    runPipeline(appName)
 }
 
-def runPipeline(Map config) {
-    def appName = config.appName ?: 'unknown'
-    def branch = config.branch ?: params.BRANCH ?: 'master'
+def runPipeline(appName: String) {
+    def branch = params.BRANCH ?: 'master'
 
     pipeline {
         agent any
