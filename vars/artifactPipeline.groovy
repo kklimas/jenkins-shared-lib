@@ -1,8 +1,8 @@
-def call(appName: String) {
+def call(String appName) {
     runPipeline(appName)
 }
 
-def runPipeline(appName: String) {
+def runPipeline(String appName) {
     def branch = params.BRANCH ?: 'master'
 
     pipeline {
