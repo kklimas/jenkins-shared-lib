@@ -4,29 +4,15 @@ class ArtifactPipelineDelegate {
     Map buildConfig = [:]
     Map nexusConfig = [:]
 
-    void build(Closure configClosure) {
-        configClosure.resolveStrategy = Closure.DELEGATE_FIRST
-        configClosure.delegate = buildConfig
-        configClosure()
+    void build(Closure c) {
+        c.resolveStrategy = Closure.DELEGATE_FIRST
+        c.delegate = buildConfig
+        c()
     }
 
-    void pushToNexus(Closure configClosure) {
-        configClosure.resolveStrategy = Closure.DELEGATE_FIRST
-        configClosure.delegate = nexusConfig
-        configClosure()
-    }
-
-    void run() {
-        pipeline {
-            agent any
-            stages {
-                stage('Build') {
-                    steps {
-                        echo "Building ${buildConfig.artifactId}:${buildConfig.version}"
-                        sh "./gradlew clean build"
-                    }
-                }
-            }
-        }
+    void pushToNexus(Closure c) {
+        c.resolveStrategy = Closure.DELEGATE_FIRST
+        c.delegate = nexusConfig
+        c()
     }
 }

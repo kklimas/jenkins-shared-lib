@@ -1,10 +1,22 @@
 import org.lib.ArtifactPipelineDelegate
 
-static def call(Closure body) {
-    def pipeline = new ArtifactPipelineDelegate()
+def call(Closure body) {
+    def delegate = new ArtifactPipelineDelegate()
     body.resolveStrategy = Closure.DELEGATE_FIRST
-    body.delegate = pipeline
+    body.delegate = delegate
     body()
 
-    pipeline.run()
+    def buildConfig = delegate.buildConfig
+
+    pipeline {
+        agent any
+        stages {
+            stage('Build') {
+                steps {
+                    echo "Building ${buildConfig.artifactId}:${buildConfig.version}"
+                    sh "./gradlew clean build"
+                }
+            }
+        }
+    }
 }
