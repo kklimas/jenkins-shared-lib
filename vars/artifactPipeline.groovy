@@ -3,8 +3,6 @@ def call() {
 }
 
 def runPipeline() {
-    def branch = params.BRANCH ?: 'master'
-
     pipeline {
         agent any
 
@@ -13,7 +11,7 @@ def runPipeline() {
                 steps {
                     checkout([
                         $class: 'GitSCM',
-                        branches: [[name: "${branch}"]],
+                        branches: [[name: "${params.BRANCH}"]],
                         userRemoteConfigs: scm.userRemoteConfigs
                     ])
                 }
