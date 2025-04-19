@@ -1,0 +1,6 @@
+steps
+
+-- build and archive
+-- run checkmarx
+-- run sonar + quality gate
+-- deploy

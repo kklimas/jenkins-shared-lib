@@ -2,7 +2,7 @@ package org.lib
 
 class ArtifactPipelineDelegate {
     Map buildConfig = [:]
-    Map nexusConfig = [:]
+    Map unitTestConfig = [:]
 
     void build(Closure c) {
         c.resolveStrategy = Closure.DELEGATE_FIRST
@@ -10,9 +10,9 @@ class ArtifactPipelineDelegate {
         c()
     }
 
-    void pushToNexus(Closure c) {
+    void unitTest(Closure c) {
         c.resolveStrategy = Closure.DELEGATE_FIRST
-        c.delegate = nexusConfig
+        c.delegate = unitTestConfig
         c()
     }
 }

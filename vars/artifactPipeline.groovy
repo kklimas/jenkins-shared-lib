@@ -7,6 +7,7 @@ def call(Closure body) {
     body()
 
     def buildConfig = delegate.buildConfig
+    def unitTestConfig = delegate.unitTestConfig
 
     pipeline {
         agent any
@@ -15,6 +16,15 @@ def call(Closure body) {
                 steps {
                     echo "Building ${buildConfig.artifactId}:${buildConfig.version}"
                     sh "./gradlew clean build"
+                }
+            }
+            stage('Unit Test') {
+                when {
+                    expression { unitTestsConfig.enabled != false }
+                }
+                steps {
+                    echo "Running unit tests..."
+                    sh "./gradlew test"
                 }
             }
         }
