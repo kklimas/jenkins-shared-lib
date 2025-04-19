@@ -1,11 +1,27 @@
-def call(Map config = [:]) {
+def call(Closure closure) {
+    def config = [:]
+
+    body.resolveStrategy = Closure.DELEGATE_FIRST
+    body.delegate = config
+    body()
+
+    runPipeline(config)
+}
+
+def runPipeline(Map config) {
+    def branch = config.branch ?: params.BRANCH ?: 'master'
+
     pipeline {
         agent any
 
         stages {
             stage('Checkout') {
                 steps {
-                    checkout scm
+                    checkout([
+                        $class: 'GitSCM',
+                        branches: [[name: "${branch}"]],
+                        userRemoteConfigs: scm.userRemoteConfigs
+                    ])
                 }
             }
 
