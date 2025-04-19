@@ -1,19 +1,11 @@
 def call() {
-    runPipeline()
-}
-
-def runPipeline() {
     pipeline {
         agent any
 
         stages {
             stage('Checkout') {
                 steps {
-                    checkout([
-                        $class: 'GitSCM',
-                        branches: [[name: "${params.BRANCH}"]],
-                        userRemoteConfigs: scm.userRemoteConfigs
-                    ])
+                    checkout scm
                 }
             }
 
