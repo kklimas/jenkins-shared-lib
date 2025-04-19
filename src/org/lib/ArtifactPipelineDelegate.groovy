@@ -10,7 +10,7 @@ class ArtifactPipelineDelegate {
         c()
     }
 
-    void unitTest(Closure c) {
+    void unitTests(Closure c) {
         c.resolveStrategy = Closure.DELEGATE_FIRST
         c.delegate = unitTestConfig
         c()
